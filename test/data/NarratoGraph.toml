@@ -1,0 +1,27 @@
+[[test]]
+game_system = "NarratoGraph"
+input = "NG"
+output = "(2NG>=4) ＞ [2,4] ＞ \n　2を選択した場合:失敗\n　4を選択した場合:成功"
+rands = [
+  { sides = 6, value = 2 },
+  { sides = 6, value = 4 },
+]
+
+[[test]]
+game_system = "NarratoGraph"
+input = "3NG"
+output = "(3NG>=4) ＞ [2,4,5] ＞ \n　2を選択した場合:失敗\n　4を選択した場合:成功\n　5を選択した場合:成功"
+rands = [
+  { sides = 6, value = 2 },
+  { sides = 6, value = 4 },
+  { sides = 6, value = 5 },
+]
+
+[[test]]
+game_system = "NarratoGraph"
+input = "SPT"
+output = "場所表(66) ＞ 博麗神社"
+rands = [
+  { sides = 6, value = 6},
+  { sides = 6, value = 6},
+]
