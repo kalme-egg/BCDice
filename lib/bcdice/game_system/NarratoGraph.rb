@@ -98,38 +98,48 @@ module BCDice
         message = "(#{commandText}) ＞ [#{diceText}] ＞ "
 
         if diceList.length == 1
-          then
-            dice = diceList.first
-            result = if dice == 6
-              "ハプニング"
-            else
-              dice + modify
+          dice = diceList.first
+          result = check_move(dice,modify)
+          message += "#{result}"
+        else
+          texts = []
+          lookeddice = []
+          rests = diceList.clone
+          diceList.each_with_index do |pickup_dice, index|
+            dice = rests[0].to_i
+            unless lookeddice.include?(dice) then
+            result = check_move(dice,modify)
+            texts << "　#{dice}を選択した場合:#{result}"
+            lookeddice << dice
             end
-            message += "#{result}"
-          else
-            texts = []
-            lookeddice = []
-            rests = diceList.clone
-            diceList.each_with_index do |pickup_dice, index|
-              dice = rests[0].to_i
-              unless lookeddice.include?(dice) then
-              result = if dice == 6
-                "ハプニング"
-              else
-                dice + modify
-              end
-              texts << "　#{dice}を選択した場合:#{result}"
-              lookeddice << dice
-            end
-              rests.delete_at(0)
-            end
-            message += "\n" + texts.join("\n")
+            rests.delete_at(0)
           end
-          return message
+          message += "\n" + texts.join("\n")
         end
+        return message
+      end
 
+      def check_move(dice,modify)
+        if dice == 6
+          return "ハプニング"
+        else
+          return dice + modify
+        end
+      end
 
       TABLES = {
+        "WT" => DiceTable::Table.new(
+          "変調表",
+          "1D6",
+          [
+            "だるい",
+            "スランプ",
+            "二日酔い",
+            "怪我",
+            "不機嫌",
+            "疲れた"
+          ]
+        ),
         "SPT" => DiceTable::D66Table.new(
           "場所表",
           D66SortType::ASC,
@@ -162,26 +172,26 @@ module BCDice
           D66SortType::ASC,
           {
             11 => "真面目 (ルルブp.189)",
-            12 => "馬鹿",
-            13 => "用意周到",
-            14 => "瀟洒",
-            15 => "活発",
-            16 => "熱中",
-            22 => "胡乱",
-            23 => "快適な拠点",
-            24 => "怠け者",
-            25 => "人気者",
-            26 => "寂しがり屋",
-            33 => "インドア派",
-            34 => "アウトドア派",
-            35 => "ご執心",
-            36 => "能天気",
-            44 => "カリスマ",
-            45 => "我儘",
-            46 => "不夜城",
-            55 => "信仰",
-            56 => "赤貧",
-            66 => "直感"
+            12 => "馬鹿 (ルルブp.189)",
+            13 => "用意周到 (ルルブp.189)",
+            14 => "瀟洒 (ルルブp.190)",
+            15 => "活発 (ルルブp.190)",
+            16 => "熱中 (ルルブp.190)",
+            22 => "胡乱 (ルルブp.190)",
+            23 => "快適な拠点 (ルルブp.190)",
+            24 => "怠け者 (ルルブp.190)",
+            25 => "人気者 (ルルブp.191)",
+            26 => "寂しがり屋 (ルルブp.191)",
+            33 => "インドア派 (ルルブp.191)",
+            34 => "アウトドア派 (ルルブp.191)",
+            35 => "ご執心 (ルルブp.191)",
+            36 => "能天気 (ルルブp.191)",
+            44 => "カリスマ (ルルブp.192)",
+            45 => "我儘 (ルルブp.192)",
+            46 => "不夜城 (ルルブp.192)",
+            55 => "信仰 (ルルブp.192)",
+            56 => "赤貧 (ルルブp.192)",
+            66 => "直感 (ルルブp.192)"
           }
         )
 
